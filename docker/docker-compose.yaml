@@ -1,0 +1,351 @@
+version: '2'
+
+volumes:
+  orderer.example.com:
+  orderer2.example.com:
+  orderer3.example.com:
+  peer0.org1.example.com:
+  peer1.org1.example.com:
+  peer0.org2.example.com:
+  peer1.org2.example.com:
+  peer0.org3.example.com:
+  peer1.org3.example.com:
+  peer0.org4.example.com:
+  peer1.org4.example.com:
+  peer0.org5.example.com:
+  peer1.org5.example.com:
+  peer0.org6.example.com:
+  peer1.org6.example.com:
+
+
+networks:
+  test:
+
+
+services:
+
+  # ORDERERS
+  orderer.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: orderer.example.com
+    container_name: orderer.example.com
+    networks:
+      - test
+
+  orderer2.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: orderer2.example.com
+    container_name: orderer2.example.com
+    networks:
+      - test
+
+  orderer3.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: orderer3.example.com
+    container_name: orderer3.example.com
+    networks:
+      - test
+
+  # PEERS
+  couchdb1:
+    container_name: couchdb1
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 5984:5984
+    networks:
+      - test
+
+  peer0.org1.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org1.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb1
+    networks:
+      - test
+
+  couchdb2:
+    container_name: couchdb2
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 6984:5984
+    networks:
+      - test
+
+  peer1.org1.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org1.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb2
+    networks:
+      - test
+
+  couchdb3:
+    container_name: couchdb3
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 7984:5984
+    networks:
+      - test
+
+  peer0.org2.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org2.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb3
+    networks:
+      - test
+
+  couchdb4:
+    container_name: couchdb4
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 8984:5984
+    networks:
+      - test
+
+  peer1.org2.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org2.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb4
+    networks:
+      - test
+
+  couchdb5:
+    container_name: couchdb5
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 9984:5984
+    networks:
+      - test
+
+  peer0.org3.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org3.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb5:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb5
+    networks:
+      - test
+
+  couchdb6:
+    container_name: couchdb6
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 10984:5984
+    networks:
+      - test
+
+  peer1.org3.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org3.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb6:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb6
+    networks:
+      - test
+
+  couchdb7:
+    container_name: couchdb7
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 11984:5984
+    networks:
+      - test
+
+  peer0.org4.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org4.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb7:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb7
+    networks:
+      - test
+
+  couchdb8:
+    container_name: couchdb8
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 12984:5984
+    networks:
+      - test
+
+  peer1.org4.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org4.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb8:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb8
+    networks:
+      - test
+
+  couchdb9:
+    container_name: couchdb9
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 13984:5984
+    networks:
+      - test
+
+  peer0.org5.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org5.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb9:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb9
+    networks:
+      - test
+
+  couchdb10:
+    container_name: couchdb10
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 14984:5984
+    networks:
+      - test
+
+  peer1.org5.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org5.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb10:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb10
+    networks:
+      - test
+
+  couchdb11:
+    container_name: couchdb11
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 15984:5984
+    networks:
+      - test
+
+  peer0.org6.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer0.org6.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb11:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb11
+    networks:
+      - test
+
+  couchdb12:
+    container_name: couchdb12
+    image: couchdb:3.1.1
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 16984:5984
+    networks:
+      - test
+
+  peer1.org6.example.com:
+    extends:
+      file: base/docker-compose-base.yaml
+      service: peer1.org6.example.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb12:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb12
+    networks:
+      - test
