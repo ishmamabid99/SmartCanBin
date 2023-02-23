@@ -50,6 +50,7 @@ module.exports.SetConnection = async (username) => {
     return data;
   } catch (err) {
     console.log(`You have encountered an error : ${err}`);
+    return err;
   }
 };
 module.exports.closeConnection = async (data) => {

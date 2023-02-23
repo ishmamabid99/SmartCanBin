@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/org1/", Routes);
-
 app.listen(PORT, (err) => {
   if (!err) {
     console.log("Connection Established " + PORT);

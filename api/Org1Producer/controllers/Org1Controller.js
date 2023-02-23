@@ -1,5 +1,4 @@
 const { SetConnection, closeConnection } = require("../connectionManageOrg1");
-
 module.exports.invoke = async (req, res) => {
   try {
     const userName = req.body.user;
@@ -64,3 +63,4 @@ module.exports.addManufactureData = async (req, res) => {
     res.status(404).json(`${err}`);
   }
 };
+

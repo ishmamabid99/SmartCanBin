@@ -1,13 +1,20 @@
 "use strict";
-
+require("dotenv").config();
 const { Wallets } = require("fabric-network");
 const FabricCAServices = require("fabric-ca-client");
 const fs = require("fs");
 const path = require("path");
-
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const TOKEN_KEY = require("../../env/env");
 module.exports.EnrollUser = async (req, res) => {
   try {
-    const user = req.body.user;
+    const username = req.body.user;
+    const password = req.body.password;
+    const hashText = username + password;
+    let user = crypto.createHash("sha256").update(hashText).digest("hex");
+    user = user.toString();
+    console.log(user);
     const ccpPath = path.resolve(__dirname, "connection-org1.json");
     const ccp = JSON.parse(fs.readFileSync(ccpPath, "utf-8"));
     const caURL = ccp.certificateAuthorities["ca.org1.example.com"].url;
@@ -52,7 +59,6 @@ module.exports.EnrollUser = async (req, res) => {
       console.log(error);
       return;
     }
-    console.log("WIEEEEEEEEEEEEE2");
     const enrollment = await ca.enroll({
       enrollmentID: user,
       enrollmentSecret: secret,
@@ -66,11 +72,16 @@ module.exports.EnrollUser = async (req, res) => {
       type: "X.509",
     };
     await wallet.put(user, x509Identity);
-    console.log(
-      `Successfully registered and enrolled user "${user}" and imported it into the wallet`
+    const token = jwt.sign(
+      {
+        user: user,
+      },
+      TOKEN_KEY,
+      {
+        expiresIn: "9999 years",
+      }
     );
-    res.status(200).json("Hoye gese mama");
-    return null;
+    return res.status(200).json(token);
   } catch (error) {
     console.log(`Failed to register user ${error}`);
     return res.status(404).json(`Failed to register user  ${error}`);
