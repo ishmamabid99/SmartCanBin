@@ -1,6 +1,6 @@
 This repository contains the code for a SmartCanBin, an innovative bin that uses various sensors and technologies to optimize waste management.
 
-#Description
+# Description
 The SmartCanBin is designed to be a user-friendly and efficient waste disposal system. It incorporates features like:
 
 Fill level sensor: The bin can detect its fill level and notify users when it needs emptying.
@@ -9,20 +9,23 @@ Smart features (optional): The bin can integrate with smart home systems or wast
 Getting Started
 To get started with the SmartCanBin project:
 
-Clone the repository:
+### Clone the repository:
 
-Bash
-git clone https://github.com/ishmamabid99/SmartCanBin.git
+
+`git clone https://github.com/ishmamabid99/SmartCanBin.git`
+
 Use code with caution.
 Install dependencies:
 
-The required dependencies will be specified in a file like requirements.txt. Refer to the specific instructions within the repository to install them.
+`pip install requirements.txt`
 
-Build and run the project:
+`npm install`
 
-The instructions for building and running the project will vary depending on the chosen hardware and software components. Refer to the specific documentation within the repository for detailed instructions.
+### Build and run the project:
 
-Features (Optional)
+
+
+# Features 
 In this section, you can elaborate on the specific functionalities of your SmartCanBin.
 
 Mention the sensors used (e.g., ultrasonic sensor for fill level detection).
