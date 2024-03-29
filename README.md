@@ -1,6 +1,6 @@
 This repository contains the code for a SmartCanBin, an innovative bin that uses various sensors and technologies to optimize waste management.
 
-##Description
+#Description
 The SmartCanBin is designed to be a user-friendly and efficient waste disposal system. It incorporates features like:
 
 Fill level sensor: The bin can detect its fill level and notify users when it needs emptying.
